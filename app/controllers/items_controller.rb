@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
     @number.items.create!(text: @lines.first, code: rand(0000..9999))
   end
 
-  def save_multiple_items
+  def handle_multiple_lines
     Item.transaction do
       @lines.each do |line|
         item = @number.items.create!(text: line, code: rand(0000..9999))
