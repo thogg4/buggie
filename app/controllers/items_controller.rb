@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
       handle_one_line
     end
 
-    items = @number.items.not_complete.map { |item| "#{item.code} #{item.text}" }.join("\n")
+    items = @number.items.not_complete.map { |item| "[#{item.code}] #{item.text}" }.join("\n")
 
     ItemNotification
       .with(message: "#{Twemoji.render_unicode(RESPONSES.sample)}\n#{items}")
