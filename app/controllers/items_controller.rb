@@ -2,12 +2,6 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
   skip_before_action :verify_authenticity_token
 
-  THUMBS = '1F44D'
-  ROCK = '1F918'
-  HANG = '1F919'
-  OK = '1F44C' 
-  RESPONSES = [THUMBS, ROCK, HANG, OK]
-
   # GET /items or /items.json
   def index
     @items = Item.all
@@ -43,10 +37,10 @@ class ItemsController < ApplicationController
       handle_one_line
     end
 
-    items = @number.items.not_complete.map { |item| "[#{item.code}] #{item.text}" }.join("\n")
+    message = @number.items.not_complete.items_stringified_for_message
 
     ItemNotification
-      .with(message: "#{Twemoji.render_unicode(RESPONSES.sample)}\n#{items}")
+      .with(message: message)
       .deliver(@number)
 
     head :created
