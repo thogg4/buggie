@@ -1,5 +1,5 @@
 class Number < ApplicationRecord
-  HOURS_TO_SEND = [8, 10, 12, 2, 4, 6, 8, 10]
+  HOURS_TO_SEND = [8, 10, 12, 14, 16, 18, 20, 22]
   has_many :items
 
   def send_out_items
