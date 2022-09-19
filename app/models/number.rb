@@ -8,7 +8,7 @@ class Number < ApplicationRecord
     message = items.not_complete.items_stringified_for_message
 
     Time.use_zone('Eastern Time (US & Canada)') do
-      return unless HOURS_TO_SEND.include?(Time.now.hour)
+      return unless HOURS_TO_SEND.include?(Time.zone.now.hour)
 
       ItemNotification
         .with(message: message)
