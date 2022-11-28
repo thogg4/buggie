@@ -169,6 +169,7 @@ GEM
       digest
       net-protocol
       timeout
+    nickel (0.1.6)
     nio4r (2.5.8)
     nokogiri (1.13.6-x86_64-darwin)
       racc (~> 1.4)
@@ -285,6 +286,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  nickel
   noticed
   pg
   phone
