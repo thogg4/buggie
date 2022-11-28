@@ -2,6 +2,10 @@ class Number < ApplicationRecord
   HOURS_TO_SEND = [8, 10, 12, 14, 16, 18, 20, 22]
   has_many :items
 
+  def self.send_for_each
+    all.each(&:send_out_items)
+  end
+
   def send_out_items
     return if items.not_complete.empty?
 
