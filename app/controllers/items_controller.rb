@@ -31,11 +31,7 @@ class ItemsController < ApplicationController
 
     @lines = item_params[:Body].split("\n")
 
-    if @lines.size > 1
-      handle_multiple_lines
-    else
-      handle_one_line
-    end
+    handle_lines
 
     message = @number.items.not_complete.items_stringified_for_message
 
@@ -46,27 +42,18 @@ class ItemsController < ApplicationController
     head :created
   end
 
-  def handle_one_line
-    if item = @number.items.find_by_code(@lines.first)
-      return item.update(complete: true)
-    end
-
-    return if @lines.first == '?'
-
-    @number.items.create!(text: @lines.first, code: rand(0000..9999))
-  end
-
-  def handle_multiple_lines
+  def handle_lines
     Item.transaction do
       @lines.each do |line|
+        if item = @number.items.find_by_code(@lines.first)
+          item.update(complete: true)
+          next
+        end
+
         item = @number.items.create!(text: line, code: rand(0000..9999))
         Rails.logger.info("New item: #{item.inspect}")
       end
     end
-  end
-
-  def emoji
-    Twemoji.render_unicode(RESPONSES.sample)
   end
 
   # PATCH/PUT /items/1 or /items/1.json
